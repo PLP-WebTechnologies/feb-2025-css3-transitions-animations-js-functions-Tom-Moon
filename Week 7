@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Preferences and Animation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .preferences {
+      margin-bottom: 20px;
+    }
+    input, button {
+      margin: 5px 0;
+      padding: 10px;
+      width: 100%;
+      max-width: 300px;
+    }
+    .box {
+      width: 100px;
+      height: 100px;
+      background-color: lightblue;
+      margin-top: 20px;
+      transition: transform 0.5s ease, background-color 0.5s ease;
+    }
+    .box.animate {
+      transform: rotate(360deg);
+      background-color: lightgreen;
+    }
+  </style>
+</head>
+<body>
+  <h1>User Preferences and Animation</h1>
+
+  <!-- User Preferences Form -->
+  <div class="preferences">
+    <label for="bgColor">Preferred Background Color:</label>
+    <input type="text" id="bgColor" placeholder="e.g., lightblue">
+    <button id="savePreferences">Save Preferences</button>
+  </div>
+
+  <!-- Animated Box -->
+  <div id="animatedBox" class="box"></div>
+
+  <script>
+    // Store and retrieve user preferences using localStorage
+    const bgColorInput = document.getElementById('bgColor');
+    const savePreferencesButton = document.getElementById('savePreferences');
+    const animatedBox = document.getElementById('animatedBox');
+
+    // Load saved preferences on page load
+    window.addEventListener('load', () => {
+      const savedColor = localStorage.getItem('bgColor');
+      if (savedColor) {
+        document.body.style.backgroundColor = savedColor;
+        bgColorInput.value = savedColor;
+      }
+    });
+
+    // Save preferences to localStorage
+    savePreferencesButton.addEventListener('click', () => {
+      const bgColor = bgColorInput.value.trim();
+      if (bgColor) {
+        localStorage.setItem('bgColor', bgColor);
+        document.body.style.backgroundColor = bgColor;
+        alert('Preferences saved!');
+      } else {
+        alert('Please enter a valid color.');
+      }
+    });
+
+    // Animation triggered by user actions
+    animatedBox.addEventListener('click', () => {
+      animatedBox.classList.toggle('animate');
+    });
+  </script>
+</body>
+</html>
